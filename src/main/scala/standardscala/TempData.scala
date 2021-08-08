@@ -35,15 +35,26 @@ object TempData {
     
     val Hotdays3=data.maxBy(_.tmax)
     println(s"3==>${Hotdays3}")
+    
     //https://www.youtube.com/watch?v=juIWMF3-sbk&list=PLLMXbkbDbVt-f6qwCZqfq7e_6eT8aFxzT&index=5
     val rainyCount=data.count(_.precip>=1.0)//instead of doing like creating a filter and couting to avoid a extra collection reduction
     println(rainyCount+s" Percent ${rainyCount*100.0/data.length}")
     
     val (totalTempRainyDay,rainyDayCount)= data.foldLeft(0.0->0){ case ((sum,count),d) =>
-    if(d.precip>=1.0) (sum,count) else (sum+d.tmax,count+1)    
+    if(d.precip<1.0) (sum,count) else (sum+d.tmax,count+1)    
     }
     println(s"avg temp on rainy day ${totalTempRainyDay/rainyDayCount}")  
     
+    val rainyTemp=data.flatMap(d=>if(d.precip<1.0) Seq.empty else Seq(d.tmax))
+    println(s"avg temp on rainy day ${rainyTemp.sum/rainyTemp.length}") 
     
+    //https://www.youtube.com/watch?v=elNlCj_EeqM&list=PLLMXbkbDbVt-f6qwCZqfq7e_6eT8aFxzT&index=7
+    
+    val dataByMonth=data.groupBy(_.month)
+    val tempByMonth=dataByMonth.map{ case (mnth,tdarr)=>
+      mnth -> tdarr.foldLeft(0.0)((sumTempa,td)=>sumTempa+td.tmax)/tdarr.length
+    }
+    
+    tempByMonth.toList.sortBy(_._1) foreach println
   }
 }
