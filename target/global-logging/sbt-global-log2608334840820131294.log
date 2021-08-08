@@ -1,0 +1,4 @@
+[0m[[0m[0mdebug[0m] [0m[0m> Exec(compile, Some(6b8caf27-ee98-4ef6-8d18-a2374480afa5), Some(CommandSource(console0)))[0m
+[0m[[0m[0mdebug[0m] [0m[0mEvaluating tasks: Compile / compile[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunning task... Cancel: Signal, check cycles: false, forcegc: true[0m
+[0m[[0m[0minfo[0m] [0m[0mshutting down sbt server[0m
